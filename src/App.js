@@ -1,9 +1,10 @@
 import './App.css';
+import Main from './components/Main';
 
 function App() {
   return (
-    <div>
-      <h1>Tenzies</h1>
+    <div className="container">
+      <Main />
     </div>
   );
 }
