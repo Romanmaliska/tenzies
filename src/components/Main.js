@@ -1,5 +1,6 @@
 import React from "react";
 import Dice from "./Dice";
+import Button from "./Button";
 import "./main.scss";
 
 const Main = () => {
@@ -7,7 +8,7 @@ const Main = () => {
         return Math.floor(Math.random() * 6) + 1;
     };
 
-    const randomNumbers = () => {
+    const randomNumbersArray = () => {
         let empty = [];
         for (let i = 0; i < 10; i++) {
             empty.push({
@@ -19,32 +20,9 @@ const Main = () => {
         return empty;
     };
 
-    const [numbers, setNumbers] = React.useState(randomNumbers());
+    const [numbers, setNumbers] = React.useState(randomNumbersArray());
 
-    const rollDices = () => {
-        setNumbers((prevNumbers) => {
-            if (prevNumbers.every((item) => item.isSelected)) {
-             return randomNumbers();
-            } else {
-                return prevNumbers.map((item) =>
-                    item.isSelected ? item : { ...item, number: randomNumber() }
-                );
-            }
-        });
-    };
-
-    const selectDice = (id) => {
-        setNumbers((prevNumbers) => {
-            return prevNumbers.map((item) => {
-                return item.id === id
-                    ? { ...item, isSelected: !item.isSelected }
-                    : item;
-            });
-        });
-    };
-    console.log(numbers);
-
-    const boxes = () =>
+    const showDices = () =>
         numbers.map((item) => {
             return (
                 <Dice
@@ -56,6 +34,40 @@ const Main = () => {
             );
         });
 
+    const [lastDiceValue, setLastDiceValue] = React.useState(0);
+
+    const selectDice = (id) => {
+        setNumbers((prevNumbers) => {
+            return prevNumbers.map((item) => {
+                if (item.id === id && lastDiceValue === 0) {
+                    console.log(lastDiceValue);
+                    setLastDiceValue((prevlastDiceValue) => item.number);
+                    return { ...item, isSelected: !item.isSelected };
+                } else if (item.id === id && lastDiceValue === item.number) {
+                    console.log(lastDiceValue);
+                    setLastDiceValue((prevlastDiceValue) => item.number);
+                    return { ...item, isSelected: !item.isSelected };
+                } else return item;
+            });
+        });
+    };
+
+    const rollDices = () => {
+        setNumbers((prevNumbers) => {
+            if (prevNumbers.every((item) => item.isSelected)) {
+                return randomNumbersArray();
+            } else {
+                return prevNumbers.map((item) =>
+                    item.isSelected ? item : { ...item, number: randomNumber() }
+                );
+            }
+        });
+    };
+
+    const isGameFinished = () => {
+        return numbers.every((item) => (item.isSelected ? true : false));
+    };
+
     return (
         <div className="container">
             <div className="wrapper">
@@ -64,10 +76,8 @@ const Main = () => {
                     Roll until all dice are the same. Click each die to freeze
                     it at its current value between rolls.
                 </p>
-                {boxes()}
-                <button className="btn" onClick={rollDices}>
-                    Roll
-                </button>
+                {showDices()}
+                <Button rollDices={rollDices} endOfGame={isGameFinished()} />
             </div>
         </div>
     );
