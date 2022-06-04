@@ -4,7 +4,7 @@ import "./dice.scss";
 const Dice = (props) => {
     return (
         <div
-            className={props.isSelected ? "dice checked" : "dice"}
+            className={props.isSelected ? "dice selected" : "dice"}
             onClick={props.selectDice}
         >
             {props.value}

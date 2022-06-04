@@ -1,12 +1,12 @@
-import './App.css';
-import Main from './components/Main';
+import "./App.scss";
+import Main from "./components/Main";
 
 function App() {
-  return (
-    <div className="container">
-      <Main />
-    </div>
-  );
+    return (
+        <div>
+            <Main />
+        </div>
+    );
 }
 
 export default App;

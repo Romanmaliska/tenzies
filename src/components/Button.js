@@ -8,7 +8,7 @@ const Button = (props) => {
         </button>
     ) : (
         <button className="btn" onClick={props.rollDices}>
-            Roll
+            Roll 
         </button>
     );
 };
