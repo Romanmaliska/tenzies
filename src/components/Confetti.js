@@ -2,7 +2,7 @@ import React from 'react'
 import Confetti from 'react-confetti'
 
 
-const Animation = (props) => {
+const Confettis = (props) => {
   return (
    <Confetti
       width="360px"
@@ -13,4 +13,4 @@ const Animation = (props) => {
   )
 }
 
-export default Animation
+export default Confettis

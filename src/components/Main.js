@@ -3,26 +3,27 @@ import Dice from "./Dice";
 import Button from "./Button";
 import RollCounter from "./RollCounter";
 import Stopwatch from "./Stopwatch";
-import Animation from "./Confetti";
+import Confettis from "./Confetti";
 
 import "./main.scss";
 
 const Main = () => {
+    const randomDice = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
 
-    const randomDice = ["⚀","⚁","⚂","⚃","⚄","⚅"];
-    
-    const randomNumber = () => {
-        return Math.floor(Math.random() * 6) + 1;
+    /* Select random dice from randomDice array*/
+
+    const randomDiceIndex = () => {
+        return Math.floor(Math.random() * 6);
     };
 
-
+    /* Creates an array with object for every dice */
 
     const randomDicesArray = () => {
         let empty = [];
         for (let i = 0; i < 10; i++) {
             empty.push({
                 id: i + 1,
-                number: randomNumber(),
+                number: randomDice[randomDiceIndex()],
                 isSelected: false,
             });
         }
@@ -31,17 +32,19 @@ const Main = () => {
 
     const [diceNumbers, setDiceNumbers] = React.useState(randomDicesArray());
 
-    const [lastDiceValue, setLastDiceValue] = React.useState(0);
+    const [lastDiceValue, setLastDiceValue] = React.useState("");
 
     const [isDiceSelected, setIsDiceSelected] = React.useState(false);
 
+    /* managing dice selection */
+
     const selectDice = (id) => {
-        setIsDiceSelected(true)
+        setIsDiceSelected(true);
         setDiceNumbers((prevDiceNumbers) => {
             return prevDiceNumbers.map((item) => {
                 if (
                     item.id === id &&
-                    (lastDiceValue === 0 || lastDiceValue === item.number)
+                    (lastDiceValue === "" || lastDiceValue === item.number)
                 ) {
                     setLastDiceValue(item.number);
                     return { ...item, isSelected: !item.isSelected };
@@ -50,24 +53,30 @@ const Main = () => {
         });
 
         if (diceNumbers.every((item) => !item.isSelected)) {
-            setLastDiceValue(0);
+            setLastDiceValue('');
         }
     };
 
     const [countOfRolls, setcountOfRolls] = React.useState(0);
+
+    /* managing Roll button functionality */
 
     const rollDices = () => {
         setcountOfRolls(countOfRolls + 1);
 
         setDiceNumbers((prevNumbers) => {
             return prevNumbers.map((item) =>
-                item.isSelected ? item : { ...item, number: randomNumber() }
+                item.isSelected
+                    ? item
+                    : { ...item, number: randomDice[randomDiceIndex()] }
             );
         });
     };
 
+    /* managing Reset Game button functionality */
+
     const resetDices = () => {
-        setIsDiceSelected(false)
+        setIsDiceSelected(false);
         setcountOfRolls(0);
         setDiceNumbers(randomDicesArray());
     };
@@ -81,6 +90,7 @@ const Main = () => {
                 <p className="game__text">
                     Roll until all dice are the same. Click each die to freeze
                     it at its current value between rolls.
+                <Confettis isGameFinished={isGameFinished} />
                 </p>
                 {diceNumbers.map((item) => (
                     <Dice
@@ -90,16 +100,15 @@ const Main = () => {
                         selectDice={() => selectDice(item.id)}
                     />
                 ))}
-                <div className="control">
-                <RollCounter countOfRolls={countOfRolls} />
-                <Button
-                    rollDices={rollDices}
-                    resetDices={resetDices}
-                    isGameFinished={isGameFinished}
-                />
-                <Stopwatch isDiceSelected={isDiceSelected}/>
+                    <Button
+                        rollDices={rollDices}
+                        resetDices={resetDices}
+                        isGameFinished={isGameFinished}
+                    />
+                <div className="stats">
+                    <RollCounter countOfRolls={countOfRolls} />
+                    <Stopwatch isDiceSelected={isDiceSelected} countOfRolls={countOfRolls} isGameFinished={isGameFinished} />
                 </div>
-                <Animation isGameFinished={isGameFinished} />
             </div>
         </div>
     );
