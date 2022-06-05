@@ -4,7 +4,6 @@ import Button from "./Button";
 import RollCounter from "./RollCounter";
 import Stopwatch from "./Stopwatch";
 import Confettis from "./Confetti";
-
 import "./main.scss";
 
 const Main = () => {
@@ -53,7 +52,7 @@ const Main = () => {
         });
 
         if (diceNumbers.every((item) => !item.isSelected)) {
-            setLastDiceValue('');
+            setLastDiceValue("");
         }
     };
 
@@ -75,7 +74,7 @@ const Main = () => {
 
     /* managing Reset Game button functionality */
 
-    const resetDices = () => {
+    const resetGame = () => {
         setIsDiceSelected(false);
         setcountOfRolls(0);
         setDiceNumbers(randomDicesArray());
@@ -90,7 +89,7 @@ const Main = () => {
                 <p className="game__text">
                     Roll until all dice are the same. Click each die to freeze
                     it at its current value between rolls.
-                <Confettis isGameFinished={isGameFinished} />
+                    <Confettis isGameFinished={isGameFinished} />
                 </p>
                 {diceNumbers.map((item) => (
                     <Dice
@@ -100,15 +99,17 @@ const Main = () => {
                         selectDice={() => selectDice(item.id)}
                     />
                 ))}
-                    <Button
-                        rollDices={rollDices}
-                        resetDices={resetDices}
-                        isGameFinished={isGameFinished}
-                    />
-                <div className="stats">
-                    <RollCounter countOfRolls={countOfRolls} />
-                    <Stopwatch isDiceSelected={isDiceSelected} countOfRolls={countOfRolls} isGameFinished={isGameFinished} />
-                </div>
+                <Button
+                    rollDices={rollDices}
+                    resetGame={resetGame}
+                    isGameFinished={isGameFinished}
+                />
+                <RollCounter countOfRolls={countOfRolls}/>
+                <Stopwatch
+                    isDiceSelected={isDiceSelected}
+                    countOfRolls={countOfRolls}
+                    isGameFinished={isGameFinished}
+                />
             </div>
         </div>
     );

@@ -3,7 +3,7 @@ import './button.scss';
 
 const Button = (props) => {
     return props.isGameFinished ? (
-        <button className="btn" onClick={props.resetDices}>
+        <button className="btn" onClick={props.resetGame}>
             Reset game
         </button>
     ) : (

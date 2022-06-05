@@ -1,13 +1,13 @@
-import React from 'react'
-import './rollCounter.scss'
+import React from "react";
+import "./rollCounter.scss";
 
 const RollCounter = (props) => {
-  return (
-    <div>
-    <h2 className="heading">Number of Rolls</h2>
-    <h3 className="count">{props.countOfRolls}</h3>
-    </div>
-  )
-}
+    return (
+        <div className="rollCounter">
+            <h2 className="rollCounter__heading">Number of Rolls</h2>
+            <h3 className="rollCounter__count">{props.countOfRolls}</h3>
+        </div>
+    );
+};
 
-export default RollCounter
+export default RollCounter;
