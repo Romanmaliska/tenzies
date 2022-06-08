@@ -12,16 +12,19 @@ const Stopwatch = (props) => {
             (props.isDiceSelected || props.countOfRolls > 0) &&
             !props.isGameFinished
         ) {
-            setIntervalId(
-                setInterval(() => setTime((prevTime) => prevTime + 1), 1000)
-            );
+            if (!intervalId) {
+                setIntervalId(
+                    setInterval(() => setTime((prevTime) => prevTime + 1), 1000)
+                );
+            }
         } else {
             clearInterval(intervalId);
+            setIntervalId()
         }
-    }, [props.isDiceSelected || props.countOfRolls > 0, props.isGameFinished]);
+    }, [props.isDiceSelected, props.countOfRolls, props.isGameFinished]);
 
     React.useEffect(() => {
-        if (props.isGameFinished && time < localStorage.getItem("time")) {
+        if (props.isGameFinished && (time < localStorage.getItem("time") || !localStorage.getItem("time"))) {
             localStorage.setItem("time", time);
         }
     }, [props.isGameFinished]);
@@ -40,13 +43,16 @@ const Stopwatch = (props) => {
             <div>
                 <h3 className="stopwatch__heading">Best Time</h3>
                 <span className="stopwatch__time">
-                    {("0" + Math.floor(localStorage.getItem("time") / 60)).slice(-2)}:
+                    {(
+                        "0" + Math.floor(localStorage.getItem("time") / 60)
+                    ).slice(-2)}
+                    :
                 </span>
                 <span className="stopwatch__time">
-                    {("0" + Math.floor(localStorage.getItem("time") % 60)).slice(-2)}
+                    {(
+                        "0" + Math.floor(localStorage.getItem("time") % 60)
+                    ).slice(-2)}
                 </span>
-                    
-                
             </div>
         </div>
     );

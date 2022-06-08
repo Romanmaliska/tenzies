@@ -89,7 +89,6 @@ const Main = () => {
                 <p className="game__text">
                     Roll until all dice are the same. Click each die to freeze
                     it at its current value between rolls.
-                    <Confettis isGameFinished={isGameFinished} />
                 </p>
                 {diceNumbers.map((item) => (
                     <Dice
@@ -104,12 +103,13 @@ const Main = () => {
                     resetGame={resetGame}
                     isGameFinished={isGameFinished}
                 />
-                <RollCounter countOfRolls={countOfRolls}/>
+                <RollCounter countOfRolls={countOfRolls} />
                 <Stopwatch
                     isDiceSelected={isDiceSelected}
                     countOfRolls={countOfRolls}
                     isGameFinished={isGameFinished}
                 />
+               { isGameFinished && <Confettis/>}
             </div>
         </div>
     );

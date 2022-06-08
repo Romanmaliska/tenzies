@@ -5,18 +5,19 @@
 
     width: 36px;
     height: 36px;
-    
-    margin: .625rem;
-    padding: .125rem;
 
-    font-size: 1.25rem;
-    line-height: 1.5rem;
+    margin: 0.625rem;
+    padding: 0.125rem;
+
+    font-size: 2rem;
 
     border-radius: 3px;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
+
+    cursor: default;
 }
 
-.selected{
-    background-color: #59E391,
+.selected {
+    background-color: #59e391;
 }

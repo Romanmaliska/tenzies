@@ -3,16 +3,15 @@ import Confetti from 'react-confetti'
 import './confetti.scss'
 
 
-const Confettis = (props) => {
+const Confettis = () => {
   return (
-    <div className="confetti">
     <Confetti
+      className="confetti"
       width="360px"
-      height="380px"
-      run={props.isGameFinished}
+      height="420px"
       recycle={false}
     />
-    </div>
+    
   )
 }
 
