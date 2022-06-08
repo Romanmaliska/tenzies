@@ -1,0 +1,15 @@
+.stopwatch {
+  display: flex;
+  justify-content: space-evenly;
+
+    .stopwatch__heading {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #2b283a;
+    }
+
+    .stopwatch__time {
+        font-weight: 700;
+        font-size: 1.25rem;
+    }
+}

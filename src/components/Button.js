@@ -1,13 +1,14 @@
 import React from "react";
+import './button.scss';
 
 const Button = (props) => {
-    const styles = {
-        textContent: props.endOfGame ? "Reset Game" : "Roll",
-    };
-
-    return (
+    return props.isGameFinished ? (
+        <button className="btn" onClick={props.resetGame}>
+            Reset game
+        </button>
+    ) : (
         <button className="btn" onClick={props.rollDices}>
-            {styles.textContent}
+            Roll 
         </button>
     );
 };
